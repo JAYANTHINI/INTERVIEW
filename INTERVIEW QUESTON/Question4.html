@@ -1,0 +1,43 @@
+<script>
+function calc(question) {
+    // Remove the "What is" and "?" from the question
+    question = question.replace('What is ', '').replace('?', '').trim();
+
+    // Parse the question to extract numbers and the operation
+    let tokens = question.split(' ');
+
+    
+    let num1 = parseInt(tokens[0]);
+    let operation = tokens[1];
+    let num2 = parseInt(tokens[2]);
+    let result;
+
+    // Perform the calculation 
+    switch (operation) {
+        case 'plus':
+            result = num1 + num2;
+            break;
+        case 'minus':
+            result = num1 - num2;
+            break;
+        case 'multiply':
+            result = num1 * num2;
+            break;
+        case 'divide':
+            result = num1 / num2;
+            break;
+        default:
+            console.log('Operation not recognized');
+            return;
+    }
+
+
+    console.log(`${num1} ${operation} ${num2} is ${result}`);
+}
+
+
+calc('What is 5 plus 7?');          
+calc('What is 9 minus 3?');            
+calc('What is 24 multiply 2?');   
+calc('What is 60 divide 5?');      
+</script>

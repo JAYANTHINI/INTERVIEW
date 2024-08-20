@@ -1,0 +1,149 @@
+<script>
+class BankAccount {
+    constructor() {
+        this.accounts = {};
+    }
+
+    // Open Account
+    openAccount(details) {
+        const { name, gender, dob, email, mobile, address, initialBalance, adharNo, panNo } = details;
+        if (this.accounts[name]) {
+            return `Account with name ${name} already exists.`;
+        }
+
+        this.accounts[name] = {
+            name,
+            gender,
+            dob,
+            email,
+            mobile,
+            address,
+            balance: initialBalance,
+            adharNo,
+            panNo,
+            ledger: [],
+        };
+
+        return `Account for ${name} successfully created.`;
+    }
+
+    // Update KYC
+    updateKYC(name, kycDetails) {
+        if (!this.accounts[name]) {
+            return `Account with name ${name} does not exist.`;
+        }
+
+        const { dob, email, mobile, adharNo, panNo } = kycDetails;
+        const account = this.accounts[name];
+        account.dob = dob || account.dob;
+        account.email = email || account.email;
+        account.mobile = mobile || account.mobile;
+        account.adharNo = adharNo || account.adharNo;
+        account.panNo = panNo || account.panNo;
+
+        return `KYC for ${name} successfully updated.`;
+    }
+
+    // Deposit Money
+    depositMoney(name, amount) {
+        if (!this.accounts[name]) {
+            return `Account with name ${name} does not exist.`;
+        }
+
+        const account = this.accounts[name];
+        account.balance += amount;
+        account.ledger.push({ type: "Deposit", amount, date: new Date() });
+
+        return `Deposited ₹${amount} to ${name}. Current balance: ₹${account.balance}`;
+    }
+
+    // Withdraw Money
+    withdrawMoney(name, amount) {
+        if (!this.accounts[name]) {
+            return `Account with name ${name} does not exist.`;
+        }
+
+        const account = this.accounts[name];
+        if (account.balance < amount) {
+            return `Insufficient balance. Current balance: ₹${account.balance}`;
+        }
+
+        account.balance -= amount;
+        account.ledger.push({ type: "Withdrawal", amount, date: new Date() });
+
+        return `Withdrew ₹${amount} from ${name}. Current balance: ₹${account.balance}`;
+    }
+
+    // Transfer Money
+    transferMoney(fromName, toName, amount) {
+        if (!this.accounts[fromName]) {
+            return `Account with name ${fromName} does not exist.`;
+        }
+
+        if (!this.accounts[toName]) {
+            return `Account with name ${toName} does not exist.`;
+        }
+
+        const fromAccount = this.accounts[fromName];
+        if (fromAccount.balance < amount) {
+            return `Insufficient balance. Current balance: ₹${fromAccount.balance}`;
+        }
+
+        fromAccount.balance -= amount;
+        fromAccount.ledger.push({ type: "Transfer Out", amount, toName, date: new Date() });
+
+        const toAccount = this.accounts[toName];
+        toAccount.balance += amount;
+        toAccount.ledger.push({ type: "Transfer In", amount, fromName, date: new Date() });
+
+        return `Transferred ₹${amount} from ${fromName} to ${toName}. Current balance: ₹${fromAccount.balance}`;
+    }
+
+    // Receive Money
+    receiveMoney(toName, fromName, amount) {
+        if (!this.accounts[toName]) {
+            return `Account with name ${toName} does not exist.`;
+        }
+
+        const toAccount = this.accounts[toName];
+        toAccount.balance += amount;
+        toAccount.ledger.push({ type: "Received", amount, fromName, date: new Date() });
+
+        return `${toName} received ₹${amount} from ${fromName}. Current balance: ₹${toAccount.balance}`;
+    }
+
+    // Get Account Details
+    getAccountDetails(name) {
+        if (!this.accounts[name]) {
+            return `Account with name ${name} does not exist.`;
+        }
+
+        return this.accounts[name];
+    }
+}
+
+// Usage Example
+const bank = new BankAccount();
+
+// Open Accounts
+console.log(bank.openAccount({ name: "hari", gender: "Male", dob: "1990-01-01", email: "hari@example.com", mobile: "1234567890", address: "123 Main St", initialBalance: 1000, adharNo: "1234-5678-9012", panNo: "ABCDE1234F" }));
+console.log(bank.openAccount({ name: "Jayanthini", gender: "Female", dob: "1992-02-02", email: "jayanthini@example.com", mobile: "0987654321", address: "456 Elm St", initialBalance: 2000, adharNo: "2345-6789-0123", panNo: "BCDEA1234F" }));
+
+// Update KYC
+console.log(bank.updateKYC("hari", { email: "newjohn@example.com", mobile: "1111111111" }));
+
+// Deposit Money
+console.log(bank.depositMoney("hari", 500));
+
+// Withdraw Money
+console.log(bank.withdrawMoney("hari", 200));
+
+// Transfer Money
+console.log(bank.transferMoney("hari", "Jayanthini", 300));
+
+// Receive Money
+console.log(bank.receiveMoney("Jayanthini", "hari", 150));
+
+// Get Account Details
+console.log(bank.getAccountDetails("hari"));
+</script>

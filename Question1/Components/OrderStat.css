@@ -1,0 +1,34 @@
+.order-stat {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    max-width: 200px;
+    margin: 10px;
+  }
+  
+  .stat-label {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+  }
+  
+  .stat-value {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .stat-change {
+    font-size: 1.2em;
+  }
+  
+  .stat-change.positive {
+    color: green;
+  }
+  
+  .stat-change.negative {
+    color: red;
+  }
+  
+  

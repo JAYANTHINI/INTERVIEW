@@ -1,0 +1,26 @@
+.App {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+.course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.course {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.course h3 {
+  margin: 0 0 10px;
+  color: #333;
+}
+
+.course p {
+  margin: 5px 0;
+  color: #555;
+}
